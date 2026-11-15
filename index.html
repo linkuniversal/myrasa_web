@@ -2294,6 +2294,17 @@
             .org-row { flex-direction: column; gap: 2px; }
             .org-row span { text-align: left; }
         }
+@media (max-width: 640px) {
+            .utility-right .utility-link { display: none; }
+            .broken-grid-section,
+            .services-section,
+            .network-section,
+            .directory-section,
+            .corporate-bottom-section {
+                padding-top: 64px !important;
+                padding-bottom: 64px !important;
+            }
+        }
     </style>
 </head>
 <body data-lang="es">
@@ -2906,8 +2917,7 @@
 
             <div class="portal-foot-help">
                 <span data-i18n="portalNoAcc">¿Necesitás habilitar tu acceso?</span>
-                <a href="mailto:operations@myrasa.com.ar?subject=Solicitud%20de%20Acceso%20Portal%20Clientes" data-i18n="portalReq">Solicitar credenciales</a>
-            </div>
+<a href="https://wa.me/5491120161221?text=Hola%20MYRASA%2C%20solicitamos%20credenciales%20de%20acceso%20al%20Portal%20de%20Clientes." target="_blank" rel="noopener noreferrer" data-i18n="portalReq">Solicitar credenciales</a>            </div>
         </div>
     </div>
 
@@ -4258,8 +4268,8 @@
                     return;
                 }
                 const headerH = header ? header.offsetHeight : 116;
-                const extraAir = 32;
-                const destY = target.getBoundingClientRect().top + window.scrollY - headerH - extraAir;
+                const isMainSection = target.tagName === 'SECTION';
+                const destY = target.getBoundingClientRect().top + window.scrollY - headerH + (isMainSection ? 2 : -28);
                 window.scrollTo({ top: Math.max(0, destY), behavior: 'smooth' });
             });
 
