@@ -39,7 +39,7 @@
             --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
 
-            /* Escala Áurea (Phi = 1.618) para aire y respiración real */
+            /* Escala Áurea (Phi = 1.618) */
             --phi-1: 8px;
             --phi-2: 13px;
             --phi-3: 21px;
@@ -48,10 +48,11 @@
             --phi-6: 89px;
             --phi-7: 144px;
 
+            --header-total: 116px;
             --shadow-soft: 0 12px 32px -12px rgba(1, 25, 56, 0.08);
             --shadow-deep: 0 28px 70px -16px rgba(1, 25, 56, 0.28);
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-            --container-max: 1260px;
+            --container-max: 1160px;
         }
 
         * {
@@ -75,7 +76,7 @@
             font-family: var(--font-sans);
             background-color: var(--myrasa-porcelain);
             color: var(--text-body);
-            line-height: 1.65;
+            line-height: 1.68;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
             overflow-x: clip;
@@ -86,15 +87,21 @@
         a { color: inherit; }
         button { font-family: inherit; }
 
+        /* Aire lateral real en todas las pantallas (nunca pegado al borde) */
         .container {
             width: 100%;
             max-width: var(--container-max);
             margin: 0 auto;
-            padding: 0 clamp(20px, 4.5vw, 48px);
+            padding-inline: clamp(24px, 5.5vw, 64px);
+        }
+
+        /* Aterrizaje tipo ascensor exacto debajo del Header */
+        section[id] {
+            scroll-margin-top: calc(var(--header-total) + 28px);
         }
 
         /* ==========================================================================
-           2. REVELADO ÓPTICO SEGURO (JAMÁS DEJA CONTENIDO OCULTO SI FALLA UN SCRIPT)
+           2. REVELADO ÓPTICO SEGURO (CONTENIDO SIEMPRE GARANTIZADO)
            ========================================================================== */
         .reveal {
             opacity: 1;
@@ -103,8 +110,8 @@
 
         .js-reveal-ready .reveal {
             opacity: 0;
-            transform: translateY(22px);
-            transition: opacity 0.85s var(--ease-out-expo), transform 0.85s var(--ease-out-expo);
+            transform: translateY(20px);
+            transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
             will-change: opacity, transform;
         }
 
@@ -115,7 +122,6 @@
 
         .reveal-delay-1 { transition-delay: 0.08s; }
         .reveal-delay-2 { transition-delay: 0.16s; }
-        .reveal-delay-3 { transition-delay: 0.24s; }
 
         /* ==========================================================================
            3. HEADER DOBLE NIVEL (MAERSK + IDENTIDAD MYRASA)
@@ -125,7 +131,7 @@
             top: 0;
             z-index: 1000;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(18px) saturate(150%);
             -webkit-backdrop-filter: blur(18px) saturate(150%);
             border-bottom: 1px solid var(--border-light);
@@ -138,7 +144,7 @@
 
         .utility-top-bar {
             background-color: var(--myrasa-abyss);
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.92);
             font-size: 0.72rem;
             border-bottom: 1px solid rgba(2, 168, 242, 0.22);
         }
@@ -248,7 +254,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
+            gap: 18px;
             min-height: 78px;
         }
 
@@ -256,7 +262,7 @@
             display: inline-flex;
             align-items: center;
             text-decoration: none;
-            width: clamp(148px, 16vw, 200px);
+            width: clamp(144px, 15.5vw, 194px);
             flex-shrink: 0;
             transition: opacity 0.2s ease;
         }
@@ -272,13 +278,13 @@
         .nav-links-desktop {
             display: flex;
             align-items: center;
-            gap: clamp(18px, 2.3vw, 34px);
+            gap: clamp(16px, 2vw, 28px);
             list-style: none;
         }
 
         .nav-links-desktop a {
             text-decoration: none;
-            font-size: 0.88rem;
+            font-size: 0.87rem;
             font-weight: 600;
             color: var(--text-title);
             position: relative;
@@ -304,12 +310,11 @@
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-shrink: 0;
         }
 
         .btn-nav-portal {
-            text-decoration: none;
             font-size: 0.82rem;
             font-weight: 700;
             color: var(--myrasa-cobalt);
@@ -318,6 +323,10 @@
             padding: 10px 16px;
             border-radius: 10px;
             white-space: nowrap;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             transition: border-color 0.2s ease, background 0.2s ease;
         }
 
@@ -358,36 +367,262 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease;
         }
 
-        .mobile-drawer {
-            display: none;
-            position: fixed;
-            inset: 0;
-            top: 116px;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            z-index: 999;
-            padding: 32px 24px;
-            flex-direction: column;
-            gap: 16px;
-            border-top: 1px solid var(--border-light);
-        }
-
-        .mobile-drawer.open { display: flex; }
-
-        .mobile-drawer a {
-            text-decoration: none;
-            font-family: var(--font-editorial);
-            font-size: 1.65rem;
-            font-weight: 700;
-            color: var(--text-title);
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-light);
+        .mobile-menu-toggle:hover {
+            border-color: var(--myrasa-sky);
+            background: #FFFFFF;
         }
 
         /* ==========================================================================
-           4. HERO PORTADA CON WEBGL WATER SHADER + NOMINADOR RÁPIDO SIN COLISIONES
+           3B. COMMAND DRAWER MÓVIL GLASSMÓRFICO (NIVEL AWWWARDS 2030)
+           ========================================================================== */
+        .mobile-drawer-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 1200;
+            background: rgba(1, 18, 42, 0.62);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s var(--ease-out-expo), visibility 0.35s;
+        }
+
+        .mobile-drawer-backdrop.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: min(100vw, 410px);
+            z-index: 1201;
+            background: linear-gradient(165deg, rgba(1, 25, 56, 0.96) 0%, rgba(2, 43, 94, 0.97) 100%);
+            backdrop-filter: blur(28px) saturate(160%);
+            -webkit-backdrop-filter: blur(28px) saturate(160%);
+            border-left: 1px solid rgba(2, 168, 242, 0.35);
+            color: #FFFFFF;
+            padding: 24px 26px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 20px;
+            overflow-y: auto;
+            transform: translateX(104%);
+            transition: transform 0.45s var(--ease-out-expo);
+            box-shadow: -24px 0 60px rgba(1, 16, 38, 0.55);
+        }
+
+        .mobile-drawer.open {
+            transform: translateX(0);
+        }
+
+        .drawer-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+        }
+
+        .drawer-brand-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            color: #7AD9FF;
+            text-transform: uppercase;
+        }
+
+        .drawer-close-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            background: rgba(255, 255, 255, 0.08);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s var(--ease-out-expo), background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .drawer-close-btn:hover {
+            transform: rotate(90deg);
+            background: rgba(2, 168, 242, 0.24);
+            border-color: var(--myrasa-sky);
+        }
+
+        .drawer-nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin: 8px 0;
+        }
+
+        .drawer-nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 14px;
+            border-radius: 14px;
+            text-decoration: none;
+            border: 1px solid transparent;
+            opacity: 0;
+            transform: translateX(18px);
+            transition: opacity 0.4s var(--ease-out-expo), transform 0.4s var(--ease-out-expo), background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .mobile-drawer.open .drawer-nav-item {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .mobile-drawer.open .drawer-nav-item:nth-child(1) { transition-delay: 0.06s; }
+        .mobile-drawer.open .drawer-nav-item:nth-child(2) { transition-delay: 0.10s; }
+        .mobile-drawer.open .drawer-nav-item:nth-child(3) { transition-delay: 0.14s; }
+        .mobile-drawer.open .drawer-nav-item:nth-child(4) { transition-delay: 0.18s; }
+        .mobile-drawer.open .drawer-nav-item:nth-child(5) { transition-delay: 0.22s; }
+
+        .drawer-nav-item:hover,
+        .drawer-nav-item:active {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(2, 168, 242, 0.32);
+        }
+
+        .drawer-nav-left {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .drawer-nav-num {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: #6CE0FF;
+        }
+
+        .drawer-nav-label {
+            font-family: var(--font-editorial);
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            line-height: 1.15;
+        }
+
+        .drawer-nav-arrow {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: rgba(122, 217, 255, 0.72);
+        }
+
+        .drawer-bottom-deck {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.14);
+        }
+
+        .drawer-utility-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+        }
+
+        .drawer-portal-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(2, 168, 242, 0.45);
+            color: #FFFFFF;
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 0.84rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .drawer-portal-btn:hover { background: rgba(2, 168, 242, 0.24); }
+
+        .drawer-lang-pill {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: #FFFFFF;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .drawer-duty-card {
+            background: rgba(1, 18, 42, 0.75);
+            border: 1px solid rgba(2, 168, 242, 0.3);
+            border-radius: 16px;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .drawer-duty-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: #93D5FF;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .drawer-duty-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .drawer-duty-btn {
+            text-decoration: none;
+            padding: 11px 12px;
+            border-radius: 10px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .drawer-duty-btn.wa {
+            background: #25D366;
+            color: #FFFFFF;
+        }
+
+        .drawer-duty-btn.tel {
+            background: rgba(255, 255, 255, 0.12);
+            color: #FFFFFF;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* ==========================================================================
+           4. HERO PORTADA CON WEBGL WATER SHADER + AIRE REAL
            ========================================================================== */
         .hero-section {
             position: relative;
@@ -440,7 +675,7 @@
         .hero-content-grid {
             position: relative;
             z-index: 5;
-            padding: clamp(52px, 8vh, 96px) 0 clamp(38px, 5.5vh, 56px);
+            padding-block: clamp(54px, 8.5vh, 96px) clamp(38px, 5.5vh, 56px);
             display: flex;
             flex-direction: column;
             gap: var(--phi-4);
@@ -474,9 +709,9 @@
 
         .hero-headline {
             font-family: var(--font-editorial);
-            font-size: clamp(2.35rem, 5.8vw, 4.5rem);
+            font-size: clamp(2.35rem, 5.6vw, 4.45rem);
             font-weight: 700;
-            line-height: 1.04;
+            line-height: 1.05;
             letter-spacing: -0.02em;
             max-width: 840px;
             color: #FFFFFF;
@@ -491,26 +726,25 @@
 
         .hero-subheadline {
             font-size: clamp(0.96rem, 1.45vw, 1.14rem);
-            line-height: 1.62;
+            line-height: 1.65;
             color: rgba(235, 245, 255, 0.92);
             max-width: 630px;
             font-weight: 400;
         }
 
-        /* WIDGET DE NOMINACIÓN / ASISTENCIA RÁPIDA (MÁRGENES DE SEGURIDAD REALES) */
         .nomination-widget {
             background: rgba(255, 255, 255, 0.97);
             backdrop-filter: blur(22px);
             -webkit-backdrop-filter: blur(22px);
             border: 1px solid rgba(255, 255, 255, 1);
             border-radius: 18px;
-            padding: 16px 18px;
+            padding: 16px 20px;
             box-shadow: 0 24px 60px rgba(1, 25, 56, 0.42);
             display: grid;
-            grid-template-columns: 1.45fr 1.25fr auto;
+            grid-template-columns: 1.42fr 1.25fr auto;
             gap: 16px;
             align-items: center;
-            max-width: 1020px;
+            max-width: 1000px;
             color: var(--text-title);
         }
 
@@ -518,7 +752,7 @@
             display: flex;
             flex-direction: column;
             gap: 5px;
-            padding: 4px 16px 4px 8px;
+            padding: 4px 16px 4px 6px;
             border-right: 1px solid var(--border-light);
             min-width: 0;
         }
@@ -577,7 +811,6 @@
             box-shadow: 0 14px 30px rgba(2, 168, 242, 0.36);
         }
 
-        /* BARRA DE ALERTA OPERATIVA AL PIE DEL HERO */
         .ops-alert-strip {
             position: relative;
             z-index: 6;
@@ -670,12 +903,12 @@
         .btn-alert-close:hover { color: var(--text-title); }
 
         /* ==========================================================================
-           5. SECCIÓN BROKEN GRID: TRAYECTORIA, GIROSCOPIO NAVAL & FOTO FIDUCIAL
+           5. BROKEN GRID: TRAYECTORIA, GIROSCOPIO NAVAL & FOTO FIDUCIAL
            ========================================================================== */
         .broken-grid-section {
             position: relative;
             background: linear-gradient(180deg, var(--myrasa-navy) 0%, var(--myrasa-navy) 65%, var(--myrasa-porcelain) 65%, var(--myrasa-porcelain) 100%);
-            padding: clamp(88px, 11vh, 136px) 0 clamp(56px, 8vh, 89px);
+            padding: clamp(92px, 11.5vh, 140px) 0 clamp(60px, 8vh, 92px);
             color: #FFFFFF;
         }
 
@@ -700,7 +933,7 @@
 
         .editorial-h2-light {
             font-family: var(--font-editorial);
-            font-size: clamp(2.15rem, 4.5vw, 3.45rem);
+            font-size: clamp(2.15rem, 4.4vw, 3.4rem);
             font-weight: 700;
             line-height: 1.08;
             color: #FFFFFF;
@@ -713,7 +946,7 @@
 
         .manifesto-copy {
             font-size: 1rem;
-            line-height: 1.78;
+            line-height: 1.8;
             color: rgba(226, 240, 255, 0.92);
         }
 
@@ -735,7 +968,7 @@
 
         .kpi-num {
             font-family: var(--font-editorial);
-            font-size: clamp(2rem, 3.6vw, 2.95rem);
+            font-size: clamp(2rem, 3.5vw, 2.9rem);
             font-weight: 700;
             line-height: 1;
             color: #FFFFFF;
@@ -756,7 +989,6 @@
             align-items: stretch;
         }
 
-        /* INSTRUMENTO 1: GIROSCOPIO MARÍTIMO / HORIZONTE ARTIFICIAL */
         .naval-gyro-module {
             background: linear-gradient(180deg, rgba(1, 25, 56, 0.97) 0%, rgba(2, 34, 78, 0.97) 100%);
             border: 1px solid rgba(2, 168, 242, 0.42);
@@ -768,7 +1000,6 @@
             justify-content: space-between;
             gap: var(--phi-2);
             box-shadow: var(--shadow-deep);
-            position: relative;
         }
 
         .gyro-header-tag {
@@ -833,7 +1064,6 @@
             text-transform: uppercase;
         }
 
-        /* FOTOGRAFÍA CON ACABADO ÓPTICO INDUSTRIAL (SIN ZOOM INFANTIL) */
         .broken-photo-card {
             position: relative;
             border-radius: 18px;
@@ -906,26 +1136,26 @@
         }
 
         /* ==========================================================================
-           6. SECCIÓN SERVICIOS: 4 CAPÍTULOS ORDENADOS CON ÍNDICE STICKY PRECISO
+           6. SECCIÓN SERVICIOS: SIDEBAR COMPACTA QUE NUNCA SE CORTA + 4 CAPÍTULOS
            ========================================================================== */
         .services-section {
-            padding: clamp(92px, 12vh, 144px) 0;
+            padding: clamp(92px, 11.5vh, 140px) 0;
             background: var(--myrasa-porcelain);
         }
 
         .services-split-layout {
             display: grid;
-            grid-template-columns: 320px 1fr;
-            gap: clamp(36px, 5.5vw, 84px);
+            grid-template-columns: 310px 1fr;
+            gap: clamp(36px, 5vw, 76px);
             align-items: start;
         }
 
         .services-sticky-sidebar {
             position: sticky;
-            top: 138px;
+            top: calc(var(--header-total) + 28px);
             display: flex;
             flex-direction: column;
-            gap: var(--phi-4);
+            gap: 24px;
         }
 
         .section-kicker-dark {
@@ -941,7 +1171,7 @@
 
         .editorial-h2-dark {
             font-family: var(--font-editorial);
-            font-size: clamp(2.05rem, 4vw, 3.15rem);
+            font-size: clamp(2rem, 3.8vw, 3.05rem);
             font-weight: 700;
             line-height: 1.08;
             color: var(--text-title);
@@ -955,18 +1185,18 @@
         .sticky-index-nav {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 10px;
             border-left: 2px solid var(--border-light);
-            padding-left: 18px;
+            padding-left: 16px;
         }
 
         .sticky-nav-link {
             text-decoration: none;
-            font-size: 0.88rem;
+            font-size: 0.86rem;
             font-weight: 600;
             color: var(--text-muted);
             position: relative;
-            padding: 4px 0;
+            padding: 5px 0;
             transition: color 0.25s ease, transform 0.25s ease;
         }
 
@@ -980,58 +1210,67 @@
         .sticky-nav-link.active::before {
             content: '';
             position: absolute;
-            left: -20px;
-            top: 4px;
-            bottom: 4px;
+            left: -18px;
+            top: 5px;
+            bottom: 5px;
             width: 3px;
             background: var(--myrasa-sky);
             border-radius: 99px;
         }
 
+        /* Tarjeta compacta horizontal: cabe en cualquier laptop sin recortarse */
         .sidebar-cert-box {
-            border-radius: 16px;
-            overflow: hidden;
+            border-radius: 14px;
             border: 1px solid var(--border-tech);
             background: var(--myrasa-ice);
-            position: relative;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
         }
 
-        .sidebar-cert-box img {
+        .sidebar-cert-thumb {
+            width: 68px;
+            height: 68px;
+            border-radius: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 1px solid var(--border-light);
+        }
+
+        .sidebar-cert-thumb img {
             width: 100%;
-            height: 185px;
+            height: 100%;
             object-fit: cover;
-        }
-
-        .sidebar-cert-copy {
-            padding: 18px 20px;
         }
 
         .sidebar-cert-copy strong {
             display: block;
-            font-size: 0.86rem;
+            font-size: 0.82rem;
             color: var(--text-title);
-            margin-bottom: 6px;
+            margin-bottom: 3px;
+            line-height: 1.25;
         }
 
         .sidebar-cert-copy span {
-            font-size: 0.78rem;
+            font-size: 0.74rem;
             color: var(--text-muted);
-            line-height: 1.55;
+            line-height: 1.42;
             display: block;
         }
 
-        /* 4 Capítulos reales bien espaciados para un Scroll-Spy impecable */
         .services-chapters-stream {
             display: flex;
             flex-direction: column;
-            gap: var(--phi-5);
+            gap: 64px;
         }
 
         .service-chapter-block {
             display: flex;
             flex-direction: column;
             gap: var(--phi-3);
-            scroll-margin-top: 138px;
+            padding-top: 8px;
+            scroll-margin-top: calc(var(--header-total) + 28px);
         }
 
         .service-chapter-header {
@@ -1056,7 +1295,7 @@
 
         .service-chapter-title {
             font-family: var(--font-editorial);
-            font-size: clamp(1.4rem, 2.4vw, 1.75rem);
+            font-size: clamp(1.38rem, 2.3vw, 1.72rem);
             font-weight: 700;
             color: var(--text-title);
             line-height: 1.15;
@@ -1072,7 +1311,7 @@
             background: #FFFFFF;
             border: 1px solid var(--border-tech);
             border-radius: 16px;
-            padding: 28px 24px;
+            padding: 26px 24px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -1125,7 +1364,7 @@
 
         .srv-title {
             font-family: var(--font-editorial);
-            font-size: 1.44rem;
+            font-size: 1.42rem;
             font-weight: 700;
             color: var(--text-title);
             line-height: 1.18;
@@ -1141,75 +1380,148 @@
         }
 
         /* ==========================================================================
-           7. RED DE 20 PUERTOS + RADAR NAVAL TÁCTICO + FOTOGRAFÍA PORTUARIA
+           7. RED DE 20 PUERTOS: CENTRO DE CONTROL SINCRONIZADO + RADAR REAL
            ========================================================================== */
         .network-section {
-            padding: clamp(92px, 12vh, 144px) 0;
+            padding: clamp(92px, 11.5vh, 140px) 0;
             background: var(--myrasa-ice);
             border-top: 1px solid var(--border-light);
             border-bottom: 1px solid var(--border-light);
         }
 
-        .maersk-split-row {
-            display: grid;
-            grid-template-columns: 1fr 1.05fr;
-            gap: clamp(34px, 5vw, 68px);
-            align-items: center;
-            margin-bottom: var(--phi-5);
+        .network-header-row {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: var(--phi-4);
+            margin-bottom: var(--phi-4);
         }
 
-        .maersk-split-text {
+        .network-control-grid {
+            display: grid;
+            grid-template-columns: 1.08fr 0.92fr;
+            gap: clamp(28px, 4.5vw, 48px);
+            align-items: start;
+        }
+
+        .network-left-panel {
             display: flex;
             flex-direction: column;
-            gap: var(--phi-3);
+            gap: 18px;
+            min-width: 0;
         }
 
-        .network-photo-inset {
-            position: relative;
-            border-radius: 16px;
-            overflow: hidden;
+        .ports-filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .port-filter-btn {
+            background: #FFFFFF;
             border: 1px solid var(--border-tech);
-            aspect-ratio: 16 / 7;
-            background: var(--myrasa-navy);
-            margin-top: 4px;
-        }
-
-        .network-photo-inset img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: contrast(1.03);
-            transition: filter 0.5s ease;
-        }
-
-        .network-photo-inset:hover img {
-            filter: contrast(1.06) brightness(1.03);
-        }
-
-        .network-photo-tag {
-            position: absolute;
-            bottom: 10px;
-            left: 12px;
+            color: var(--text-title);
+            padding: 10px 16px;
+            border-radius: 999px;
             font-family: var(--font-mono);
-            font-size: 0.62rem;
+            font-size: 0.69rem;
             font-weight: 700;
-            color: #FFFFFF;
-            background: rgba(1, 25, 56, 0.84);
-            backdrop-filter: blur(8px);
-            padding: 4px 10px;
-            border-radius: 6px;
-            border: 1px solid rgba(2, 168, 242, 0.35);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
         }
 
-        /* INSTRUMENTO 2: RADAR NAVAL TÁCTICO A 60 FPS */
+        .port-filter-btn:hover { border-color: var(--myrasa-sky); }
+
+        .port-filter-btn.active {
+            background: var(--myrasa-cobalt);
+            color: #FFFFFF;
+            border-color: var(--myrasa-cobalt);
+            box-shadow: 0 8px 18px rgba(4, 83, 170, 0.20);
+        }
+
+        /* Grilla de puertos pegada inmediatamente debajo de sus filtros */
+        .ports-showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 11px;
+        }
+
+        .port-showcase-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-tech);
+            border-radius: 13px;
+            padding: 14px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            cursor: pointer;
+            min-width: 0;
+            transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .port-showcase-card.has-office {
+            border-color: var(--myrasa-sky);
+            background: linear-gradient(135deg, #FFFFFF 0%, #F0F8FF 100%);
+        }
+
+        .port-showcase-card:hover {
+            border-color: var(--myrasa-cobalt);
+        }
+
+        .port-showcase-card.is-radar-locked {
+            border-color: #02A8F2;
+            background: #E8F5FE;
+            box-shadow: 0 0 0 2px rgba(2, 168, 242, 0.22);
+        }
+
+        .port-card-name {
+            font-size: 0.87rem;
+            font-weight: 700;
+            color: var(--text-title);
+            display: block;
+            line-height: 1.25;
+            overflow-wrap: break-word;
+        }
+
+        .port-card-tag {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            display: block;
+            margin-top: 3px;
+            line-height: 1.35;
+        }
+
+        .office-beacon-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--myrasa-sky);
+            box-shadow: 0 0 0 3px rgba(2, 168, 242, 0.22);
+            flex-shrink: 0;
+        }
+
+        /* Columna Derecha: Carta Geográfica Radar Real + Foto Portuaria */
+        .network-right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            position: sticky;
+            top: calc(var(--header-total) + 28px);
+        }
+
         .tactical-radar-box {
             position: relative;
-            background: radial-gradient(circle at center, #032B60 0%, #011836 72%, #011026 100%);
-            border: 1px solid rgba(2, 168, 242, 0.45);
+            background: radial-gradient(circle at 52% 48%, #032B60 0%, #011836 74%, #010F24 100%);
+            border: 1px solid rgba(2, 168, 242, 0.48);
             border-radius: 20px;
             overflow: hidden;
             box-shadow: var(--shadow-deep);
-            aspect-ratio: 16 / 12;
+            aspect-ratio: 4 / 3.35;
             width: 100%;
         }
 
@@ -1233,7 +1545,7 @@
             align-items: center;
             z-index: 3;
             font-family: var(--font-mono);
-            font-size: 0.64rem;
+            font-size: 0.62rem;
             font-weight: 700;
             color: #7AD9FF;
             text-transform: uppercase;
@@ -1244,15 +1556,15 @@
         .radar-target-info {
             position: absolute;
             bottom: 14px;
-            left: 16px;
-            right: 16px;
-            background: rgba(1, 25, 56, 0.9);
+            left: 14px;
+            right: 14px;
+            background: rgba(1, 25, 56, 0.92);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(2, 168, 242, 0.38);
             border-radius: 10px;
-            padding: 9px 14px;
+            padding: 10px 14px;
             font-family: var(--font-mono);
-            font-size: 0.66rem;
+            font-size: 0.64rem;
             color: #FFFFFF;
             display: flex;
             justify-content: space-between;
@@ -1267,99 +1579,45 @@
             white-space: nowrap;
         }
 
-        .ports-filter-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .port-filter-btn {
-            background: #FFFFFF;
+        .network-photo-inset {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
             border: 1px solid var(--border-tech);
-            color: var(--text-title);
-            padding: 10px 18px;
-            border-radius: 999px;
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-            transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+            aspect-ratio: 16 / 6.5;
+            background: var(--myrasa-navy);
         }
 
-        .port-filter-btn:hover { border-color: var(--myrasa-sky); }
+        .network-photo-inset img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: contrast(1.03);
+            transition: filter 0.5s ease;
+        }
 
-        .port-filter-btn.active {
-            background: var(--myrasa-cobalt);
+        .network-photo-inset:hover img { filter: contrast(1.06) brightness(1.03); }
+
+        .network-photo-tag {
+            position: absolute;
+            bottom: 10px;
+            left: 12px;
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 700;
             color: #FFFFFF;
-            border-color: var(--myrasa-cobalt);
-            box-shadow: 0 8px 18px rgba(4, 83, 170, 0.20);
-        }
-
-        .ports-showcase-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: var(--phi-2);
-        }
-
-        .port-showcase-card {
-            background: #FFFFFF;
-            border: 1px solid var(--border-tech);
-            border-radius: 14px;
-            padding: 16px 18px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            cursor: pointer;
-            min-width: 0;
-            transition: border-color 0.22s ease, background-color 0.22s ease;
-        }
-
-        .port-showcase-card.has-office {
-            border-color: var(--myrasa-sky);
-            background: linear-gradient(135deg, #FFFFFF 0%, #F0F8FF 100%);
-        }
-
-        .port-showcase-card:hover,
-        .port-showcase-card.is-radar-locked {
-            border-color: var(--myrasa-cobalt);
-            background: #F4FAFF;
-        }
-
-        .port-card-name {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--text-title);
-            display: block;
-            line-height: 1.3;
-            overflow-wrap: break-word;
-        }
-
-        .port-card-tag {
-            font-family: var(--font-mono);
-            font-size: 0.62rem;
-            color: var(--text-muted);
-            display: block;
-            margin-top: 4px;
-            line-height: 1.35;
-        }
-
-        .office-beacon-dot {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            background: var(--myrasa-sky);
-            box-shadow: 0 0 0 3px rgba(2, 168, 242, 0.22);
-            flex-shrink: 0;
+            background: rgba(1, 25, 56, 0.86);
+            backdrop-filter: blur(8px);
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(2, 168, 242, 0.35);
         }
 
         /* ==========================================================================
            8. DIRECTORIO DE OFICINAS PROPIAS & GUARDIAS ATA 24/7
            ========================================================================== */
         .directory-section {
-            padding: clamp(92px, 12vh, 144px) 0;
+            padding: clamp(92px, 11.5vh, 140px) 0;
             background: var(--myrasa-porcelain);
         }
 
@@ -1542,10 +1800,10 @@
         .staff-action-btn svg { width: 17px; height: 17px; }
 
         /* ==========================================================================
-           9. SECCIÓN ORGANIGRAMA & CASA CENTRAL CON MAPA
+           9. ORGANIGRAMA & CASA CENTRAL + SEGUNDO EFECTO OCEAN WAVE EN FOOTER
            ========================================================================== */
         .corporate-bottom-section {
-            padding: clamp(88px, 11vh, 136px) 0;
+            padding: clamp(92px, 11.5vh, 140px) 0 clamp(76px, 9vh, 110px);
             background: var(--myrasa-ice);
             border-top: 1px solid var(--border-light);
         }
@@ -1643,14 +1901,29 @@
             border-color: var(--myrasa-cobalt);
         }
 
-        /* ==========================================================================
-           10. FOOTER MONUMENTAL & DOCK FLOTANTE CON SMART-SCROLL
-           ========================================================================== */
+        /* Segundo efecto de agua: Ocean Wave Fluido en el horizonte del Footer */
+        .ocean-wave-transition {
+            position: relative;
+            width: 100%;
+            height: 112px;
+            background: var(--myrasa-ice);
+            overflow: hidden;
+            margin-bottom: -1px;
+        }
+
+        #waveCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            cursor: ns-resize;
+        }
+
         .site-footer {
             background: var(--myrasa-abyss);
             color: rgba(255, 255, 255, 0.9);
-            padding: 68px 0 36px;
-            border-top: 3px solid var(--myrasa-sky);
+            padding: 52px 0 36px;
         }
 
         .footer-grid {
@@ -1696,13 +1969,23 @@
             font-size: 0.85rem;
         }
 
-        .footer-links-list a {
+        .footer-links-list a,
+        .footer-links-list button {
             text-decoration: none;
             color: rgba(235, 245, 255, 0.85);
+            background: transparent;
+            border: none;
+            font-size: inherit;
+            cursor: pointer;
+            text-align: left;
             transition: color 0.2s ease;
         }
 
-        .footer-links-list a:hover { color: #FFFFFF; text-decoration: underline; }
+        .footer-links-list a:hover,
+        .footer-links-list button:hover {
+            color: #FFFFFF;
+            text-decoration: underline;
+        }
 
         .footer-bottom-bar {
             padding-top: 26px;
@@ -1716,6 +1999,167 @@
             color: rgba(168, 214, 255, 0.72);
         }
 
+        /* ==========================================================================
+           10. MODAL PORTAL CLIENTES (MODERNO, GLASSMÓRFICO, GITHUB+CLOUDFLARE READY)
+           ========================================================================== */
+        .portal-modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1300;
+            background: rgba(1, 20, 48, 0.72);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s var(--ease-out-expo), visibility 0.3s;
+        }
+
+        .portal-modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .portal-modal-card {
+            width: 100%;
+            max-width: 470px;
+            background: #FFFFFF;
+            border: 1px solid var(--border-sky);
+            border-radius: 22px;
+            padding: clamp(24px, 4vw, 34px);
+            box-shadow: 0 32px 80px rgba(1, 20, 48, 0.5);
+            transform: translateY(18px) scale(0.97);
+            transition: transform 0.38s var(--ease-out-expo);
+            position: relative;
+        }
+
+        .portal-modal-overlay.open .portal-modal-card {
+            transform: translateY(0) scale(1);
+        }
+
+        .portal-modal-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .portal-close-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border-light);
+            background: var(--myrasa-ice);
+            color: var(--text-title);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.2s ease, transform 0.25s ease;
+        }
+
+        .portal-close-btn:hover {
+            background: var(--myrasa-cobalt);
+            color: #FFFFFF;
+            transform: rotate(90deg);
+        }
+
+        .portal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .portal-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .portal-input-group label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--myrasa-cobalt);
+        }
+
+        .portal-input-group input {
+            width: 100%;
+            padding: 13px 15px;
+            border-radius: 11px;
+            border: 1px solid var(--border-tech);
+            background: var(--myrasa-ice);
+            font-family: var(--font-sans);
+            font-size: 0.92rem;
+            color: var(--text-title);
+            outline: none;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .portal-input-group input:focus {
+            border-color: var(--myrasa-sky);
+            background: #FFFFFF;
+        }
+
+        .portal-submit-btn {
+            margin-top: 4px;
+            background: linear-gradient(135deg, var(--myrasa-navy) 0%, var(--myrasa-cobalt) 100%);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: filter 0.2s ease;
+        }
+
+        .portal-submit-btn:hover { filter: brightness(1.08); }
+
+        .portal-status-msg {
+            display: none;
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            background: var(--myrasa-sky-soft);
+            border: 1px solid var(--border-sky);
+            color: var(--text-title);
+        }
+
+        .portal-status-msg.visible { display: block; }
+
+        .portal-foot-help {
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px dashed var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .portal-foot-help a {
+            color: var(--myrasa-cobalt);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .portal-foot-help a:hover { text-decoration: underline; }
+
+        /* ==========================================================================
+           11. DOCK FLOTANTE CON SMART-SCROLL
+           ========================================================================== */
         .gac-floating-dock {
             position: fixed;
             right: 20px;
@@ -1762,7 +2206,7 @@
         .gac-circle-btn svg { width: 22px; height: 22px; }
 
         /* ==========================================================================
-           11. RESPONSIVE PERFECCIONADO (2 COLUMNAS EN MÓVIL + IG / WHATSAPP WEBVIEW)
+           12. RESPONSIVE PERFECCIONADO (PC, TABLET, MÓVIL & IG/WHATSAPP 320px+)
            ========================================================================== */
         @media (max-width: 1024px) {
             .services-split-layout { grid-template-columns: 1fr; gap: var(--phi-4); }
@@ -1774,12 +2218,12 @@
                 padding-left: 0;
                 border-bottom: 1px solid var(--border-light);
                 padding-bottom: 14px;
-                gap: 12px 18px;
+                gap: 10px 18px;
             }
             .sticky-nav-link.active::before { display: none; }
-            .broken-grid-top, .maersk-split-row, .bottom-two-col { grid-template-columns: 1fr; }
+            .broken-grid-top, .network-control-grid, .bottom-two-col { grid-template-columns: 1fr; }
+            .network-right-panel { position: static; }
             .broken-photo-stage { grid-template-columns: 1fr; gap: var(--phi-3); }
-            /* Adaptación elegante del Giroscopio en Tablet/Móvil (no se borra) */
             .naval-gyro-module {
                 flex-direction: row;
                 flex-wrap: wrap;
@@ -1790,7 +2234,6 @@
             .gyro-header-tag { width: auto; justify-content: flex-start; }
             #gyroCanvas { width: 112px; height: 112px; }
             .gyro-telemetry-stack { width: auto; flex: 1; min-width: 140px; border-top: none; padding-top: 0; border-left: 1px solid rgba(2, 168, 242, 0.22); padding-left: 16px; }
-            .ports-showcase-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         }
 
         @media (max-width: 860px) {
@@ -1801,15 +2244,13 @@
             .nom-field.no-border { border-bottom: none; padding-bottom: 6px; }
             .stats-kpi-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--phi-3); }
             .staff-cards-grid { grid-template-columns: 1fr; }
-            .ports-showcase-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .footer-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 640px) {
             .utility-hq-tel, .utility-link.hide-xs { display: none; }
             .broken-photo-card { aspect-ratio: 4 / 3; }
-            .broken-photo-caption { left: 12px; right: 12px; bottom: 12px; padding: 9px 12px; font-size: 0.74rem; }
-            /* Grilla compacta de 2 columnas en móvil: aire real y cero scroll infinito */
+            .broken-photo-caption { left: 12px; right: 12px; bottom: 12px; padding: 10px 14px; font-size: 0.74rem; }
             .services-cards-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 12px;
@@ -1822,7 +2263,7 @@
             .srv-icon { width: 36px; height: 36px; border-radius: 9px; }
             .srv-icon svg { width: 18px; height: 18px; }
             .srv-title { font-size: 1.08rem; margin-bottom: 5px; }
-            .srv-desc { font-size: 0.76rem; line-height: 1.48; }
+            .srv-desc { font-size: 0.76rem; line-height: 1.5; }
 
             .ports-showcase-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1838,12 +2279,11 @@
             .gac-circle-btn { width: 46px; height: 46px; }
         }
 
-        /* Blindaje para visores ultra angostos (Instagram / WhatsApp In-App 320px–360px) */
         @media (max-width: 375px) {
-            .container { padding: 0 16px; }
+            .container { padding-inline: 22px; }
             .utility-left { font-size: 0.62rem; gap: 8px; }
             .utility-link { display: none; }
-            .brand-logo-link { width: 138px; }
+            .brand-logo-link { width: 136px; }
             .btn-nav-cta { padding: 9px 12px; font-size: 0.76rem; }
             .naval-gyro-module { flex-direction: column; text-align: center; }
             .gyro-telemetry-stack { border-left: none; padding-left: 0; border-top: 1px solid rgba(2, 168, 242, 0.22); padding-top: 10px; width: 100%; }
@@ -1969,25 +2409,80 @@
             </ul>
 
             <div class="nav-actions">
-                <a href="https://myrasa.com.ar/home/" target="_blank" rel="noopener noreferrer" class="btn-nav-portal" data-i18n="navPortal">Portal Clientes</a>
+                <button type="button" class="btn-nav-portal" onclick="openPortalModal()" data-i18n="navPortal">Portal Clientes</button>
                 <a href="https://wa.me/5491120161221?text=Hola%20MYRASA%2C%20solicitamos%20asistencia%20operativa%2024%2F7." target="_blank" rel="noopener noreferrer" class="btn-nav-cta">
                     <span data-i18n="navCta">Asistencia</span> <span class="hide-xs">24/7</span> ↗
                 </a>
-                <button type="button" class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Menú">
+                <button type="button" class="mobile-menu-toggle" id="mobileMenuToggleBtn" onclick="toggleMobileMenu()" aria-label="Menú" aria-expanded="false">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
                 </button>
             </div>
         </div>
     </header>
 
-    <div class="mobile-drawer" id="mobileDrawer">
-        <a href="#trayectoria" onclick="closeMobileMenu()" data-i18n="navTrayectoria">Trayectoria</a>
-        <a href="#servicios" onclick="closeMobileMenu()" data-i18n="navServicios">Servicios</a>
-        <a href="#puertos" onclick="closeMobileMenu()" data-i18n="navPuertos">Red de Puertos</a>
-        <a href="#oficinas" onclick="closeMobileMenu()" data-i18n="navOficinas">Oficinas &amp; Guardias</a>
-        <a href="#empresa" onclick="closeMobileMenu()" data-i18n="navEmpresa">Empresa</a>
-        <a href="https://myrasa.com.ar/home/" target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()" data-i18n="navPortal">Portal Clientes ↗</a>
-    </div>
+    <!-- ==========================================================================
+         COMMAND DRAWER MÓVIL GLASSMÓRFICO (REEMPLAZA EL POPUP BÁSICO ANTERIOR)
+         ========================================================================== -->
+    <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop" onclick="closeMobileMenu()"></div>
+    <aside class="mobile-drawer" id="mobileDrawer" aria-hidden="true" aria-label="Menú principal móvil">
+        <div>
+            <div class="drawer-top-bar">
+                <span class="drawer-brand-badge">
+                    <span class="live-dot"></span>
+                    <span>MYRASA · BRIDGE NAV</span>
+                </span>
+                <button type="button" class="drawer-close-btn" onclick="closeMobileMenu()" aria-label="Cerrar menú">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+
+            <nav class="drawer-nav-list" aria-label="Secciones">
+                <a href="#trayectoria" class="drawer-nav-item" onclick="closeMobileMenu()">
+                    <span class="drawer-nav-left"><span class="drawer-nav-num">01</span><span class="drawer-nav-label" data-i18n="navTrayectoria">Trayectoria</span></span>
+                    <span class="drawer-nav-arrow">→</span>
+                </a>
+                <a href="#servicios" class="drawer-nav-item" onclick="closeMobileMenu()">
+                    <span class="drawer-nav-left"><span class="drawer-nav-num">02</span><span class="drawer-nav-label" data-i18n="navServicios">Servicios</span></span>
+                    <span class="drawer-nav-arrow">→</span>
+                </a>
+                <a href="#puertos" class="drawer-nav-item" onclick="closeMobileMenu()">
+                    <span class="drawer-nav-left"><span class="drawer-nav-num">03</span><span class="drawer-nav-label" data-i18n="navPuertos">Red de Puertos</span></span>
+                    <span class="drawer-nav-arrow">→</span>
+                </a>
+                <a href="#oficinas" class="drawer-nav-item" onclick="closeMobileMenu()">
+                    <span class="drawer-nav-left"><span class="drawer-nav-num">04</span><span class="drawer-nav-label" data-i18n="navOficinas">Oficinas &amp; Guardias</span></span>
+                    <span class="drawer-nav-arrow">→</span>
+                </a>
+                <a href="#empresa" class="drawer-nav-item" onclick="closeMobileMenu()">
+                    <span class="drawer-nav-left"><span class="drawer-nav-num">05</span><span class="drawer-nav-label" data-i18n="navEmpresa">Empresa</span></span>
+                    <span class="drawer-nav-arrow">→</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="drawer-bottom-deck">
+            <div class="drawer-utility-row">
+                <button type="button" class="drawer-portal-btn" onclick="closeMobileMenu(); openPortalModal();">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <span data-i18n="navPortal">Portal Clientes</span>
+                </button>
+                <button type="button" class="drawer-lang-pill" onclick="toggleLanguage()">
+                    <span id="drawerLangLabel">ES / EN</span>
+                </button>
+            </div>
+
+            <div class="drawer-duty-card">
+                <div class="drawer-duty-head">
+                    <span data-i18n="liveDuty">Guardia 24/7 · 365 Días</span>
+                    <span>CABA · HQ</span>
+                </div>
+                <div class="drawer-duty-actions">
+                    <a href="https://wa.me/5491120161221?text=Hola%20MYRASA%2C%20solicitamos%20asistencia%20operativa%2024%2F7." target="_blank" rel="noopener noreferrer" class="drawer-duty-btn wa">WhatsApp 24/7</a>
+                    <a href="tel:+541143427412" class="drawer-duty-btn tel">(011) 4342-7412</a>
+                </div>
+            </div>
+        </div>
+    </aside>
 
     <main id="top">
 
@@ -2018,7 +2513,6 @@
                     </p>
                 </div>
 
-                <!-- WIDGET DE NOMINACIÓN / ASISTENCIA RÁPIDA SIN COLISIONES -->
                 <div class="nomination-widget" role="region" aria-label="Asistencia rápida por puerto">
                     <div class="nom-field">
                         <label for="nomPort" data-i18n="nomPortLabel">Puerto de Escala</label>
@@ -2045,7 +2539,6 @@
                 </div>
             </div>
 
-            <!-- BARRA DE ALERTA OPERATIVA AL PIE DEL HERO -->
             <div class="ops-alert-strip" id="opsAlertStrip">
                 <div class="container ops-alert-inner">
                     <div class="ops-alert-left">
@@ -2105,7 +2598,6 @@
                 </div>
 
                 <div class="broken-photo-stage reveal reveal-delay-2">
-                    <!-- INSTRUMENTO 1: GIROSCOPIO MARÍTIMO / HORIZONTE ARTIFICIAL (FÍSICA SPRING-DAMPER) -->
                     <aside class="naval-gyro-module" aria-label="Giroscopio Marítimo de Actitud y Rumbo">
                         <div class="gyro-header-tag">
                             <span class="gyro-dot"></span>
@@ -2117,7 +2609,7 @@
                         <div class="gyro-telemetry-stack">
                             <div class="gyro-telemetry-readout">
                                 <span id="gyroPitch">PITCH: +0.0°</span>
-                                <span id="gyroRoll">ROLL: 0.0°</span>
+                                <span id="gyroRoll">ROLL: +0.0°</span>
                             </div>
                             <div class="gyro-telemetry-readout">
                                 <span id="gyroHdg">HDG: 142° SE</span>
@@ -2127,7 +2619,6 @@
                         </div>
                     </aside>
 
-                    <!-- FOTOGRAFÍA NÁUTICA CON RETÍCULAS FIDUCIALES (+) -->
                     <div class="broken-photo-card">
                         <span class="fiducial-mark fiducial-tl" aria-hidden="true">+</span>
                         <span class="fiducial-mark fiducial-tr" aria-hidden="true">+</span>
@@ -2149,7 +2640,7 @@
         </section>
 
         <!-- ======================================================================
-             3. SERVICIOS INTEGRALES: 4 CAPÍTULOS ORDENADOS + ÍNDICE STICKY
+             3. SERVICIOS INTEGRALES: SIDEBAR COMPACTA + 4 CAPÍTULOS ORDENADOS
              ====================================================================== -->
         <section class="services-section" id="servicios">
             <div class="container services-split-layout">
@@ -2169,12 +2660,14 @@
                     </nav>
 
                     <div class="sidebar-cert-box">
-                        <img
-                            src="./media%20myrasa%20web/cubierta_industrial_sobre_el_oc_ano_azul.webp"
-                            alt="Cubierta operativa MYRASA en navegación"
-                            loading="lazy"
-                            decoding="async"
-                        >
+                        <div class="sidebar-cert-thumb">
+                            <img
+                                src="./media%20myrasa%20web/cubierta_industrial_sobre_el_oc_ano_azul.webp"
+                                alt="Cubierta operativa MYRASA en navegación"
+                                loading="lazy"
+                                decoding="async"
+                            >
+                        </div>
                         <div class="sidebar-cert-copy">
                             <strong data-i18n="sideCertTitle">Cobertura Operativa Directa</strong>
                             <span data-i18n="sideCertSub">Personal ATA habilitado en cada puerto para despachos ágiles y asistencia a tripulaciones.</span>
@@ -2187,25 +2680,47 @@
         </section>
 
         <!-- ======================================================================
-             4. CORREDOR FLUVIAL & MARÍTIMO: RADAR TÁCTICO 60 FPS + 20 PUERTOS
+             4. CENTRO DE CONTROL DE 20 PUERTOS + CARTA RADAR GEOGRÁFICA REAL
              ====================================================================== -->
         <section class="network-section" id="puertos">
             <div class="container">
-                <div class="maersk-split-row">
-                    <div class="maersk-split-text reveal">
+                <div class="network-header-row reveal">
+                    <div>
                         <span class="section-kicker-dark" data-i18n="netKicker">Corredor Fluvial &amp; Marítimo</span>
                         <h2 class="editorial-h2-dark" data-i18n="netHeadline">
                             De la Hidrovía Paraná al <em>Atlántico Sur y ROU</em>
                         </h2>
-                        <p style="font-size:0.96rem; color:var(--text-body); line-height:1.68;" data-i18n="netDesc">
-                            Conectamos operaciones en 20 terminales estratégicas con 5 oficinas propias ubicadas en los puntos neurálgicos del comercio fluvial, petrolero y cerealero.
-                        </p>
+                    </div>
+                    <p style="font-size:0.94rem; color:var(--text-body); max-width:440px; line-height:1.65;" data-i18n="netDesc">
+                        Conectamos operaciones en 20 terminales estratégicas con 5 oficinas propias ubicadas en los puntos neurálgicos del comercio fluvial, petrolero y cerealero.
+                    </p>
+                </div>
 
+                <div class="network-control-grid">
+                    <!-- COLUMNA IZQUIERDA: FILTROS + GRILLA INMEDIATA DEBAJO (CERO ADIVINANZAS) -->
+                    <div class="network-left-panel reveal">
                         <div class="ports-filter-bar" id="portsFilterBar">
                             <button type="button" class="port-filter-btn active" data-filter="all" onclick="filterPorts('all', this)" data-i18n="fAll">Todos (20)</button>
                             <button type="button" class="port-filter-btn" data-filter="own" onclick="filterPorts('own', this)" data-i18n="fOwn">Oficinas Propias (5)</button>
                             <button type="button" class="port-filter-btn" data-filter="parana" onclick="filterPorts('parana', this)" data-i18n="fParana">Hidrovía Paraná</button>
                             <button type="button" class="port-filter-btn" data-filter="atlantic" onclick="filterPorts('atlantic', this)" data-i18n="fAtlantic">Atlántico &amp; ROU</button>
+                        </div>
+
+                        <div class="ports-showcase-grid" id="portsShowcaseGrid"></div>
+                    </div>
+
+                    <!-- COLUMNA DERECHA: CARTA NÁUTICA RADAR REAL (LAT/LON EXACTOS AR-ROU) + FOTO -->
+                    <div class="network-right-panel reveal reveal-delay-1">
+                        <div class="tactical-radar-box" aria-label="Carta Náutica Radar de 20 Puertos">
+                            <div class="radar-telemetry-hud">
+                                <span>ECDIS CHART · AR / ROU</span>
+                                <span id="radarStatus">WGS84 · REAL COORDS</span>
+                            </div>
+                            <canvas id="radarCanvas" width="560" height="460"></canvas>
+                            <div class="radar-target-info">
+                                <span id="radarLockName">LOCK: BUENOS AIRES (OFICINA PROPIA)</span>
+                                <span id="radarLockCoord">34°36'S · 58°22'W · HQ</span>
+                            </div>
                         </div>
 
                         <div class="network-photo-inset">
@@ -2220,22 +2735,7 @@
                             <span class="network-photo-tag" data-i18n="netPhotoTag">TERMINALES FLUVIALES &amp; ATLÁNTICAS · AR / ROU</span>
                         </div>
                     </div>
-
-                    <!-- INSTRUMENTO 2: RADAR NAVAL TÁCTICO INTERACTIVO A 60 FPS -->
-                    <div class="tactical-radar-box reveal reveal-delay-1" aria-label="Radar Naval Táctico de 20 Puertos">
-                        <div class="radar-telemetry-hud">
-                            <span>ARPA RADAR · 64 NM</span>
-                            <span id="radarStatus">SWEEP: 18 RPM · LIVE</span>
-                        </div>
-                        <canvas id="radarCanvas" width="560" height="420"></canvas>
-                        <div class="radar-target-info">
-                            <span id="radarLockName">LOCK: BUENOS AIRES (OFICINA PROPIA)</span>
-                            <span id="radarLockCoord">34°36'S · 58°22'W</span>
-                        </div>
-                    </div>
                 </div>
-
-                <div class="ports-showcase-grid reveal reveal-delay-2" id="portsShowcaseGrid"></div>
             </div>
         </section>
 
@@ -2322,6 +2822,13 @@
     </main>
 
     <!-- ==========================================================================
+         SEGUNDO EFECTO DE AGUA: OCEAN WAVE FLUIDO EN EL HORIZONTE DEL FOOTER
+         ========================================================================== -->
+    <div class="ocean-wave-transition" aria-hidden="true">
+        <canvas id="waveCanvas"></canvas>
+    </div>
+
+    <!-- ==========================================================================
          FOOTER MONUMENTAL
          ========================================================================== -->
     <footer class="site-footer">
@@ -2341,7 +2848,7 @@
                         <li><a href="#servicios" data-i18n="navServicios">Servicios Integrales</a></li>
                         <li><a href="#puertos" data-i18n="navPuertos">Red de 20 Puertos</a></li>
                         <li><a href="#oficinas" data-i18n="navOficinas">Oficinas &amp; Guardias ATA</a></li>
-                        <li><a href="https://myrasa.com.ar/home/" target="_blank" rel="noopener noreferrer" data-i18n="navPortal">Portal de Clientes</a></li>
+                        <li><button type="button" onclick="openPortalModal()" data-i18n="navPortal">Portal de Clientes</button></li>
                     </ul>
                 </div>
 
@@ -2364,7 +2871,48 @@
     </footer>
 
     <!-- ==========================================================================
-         DOCK FLOTANTE CON SMART-SCROLL (NUNCA TAPA EL WIDGET DEL HERO)
+         MODAL PORTAL CLIENTES INTEGRADO (MODERNO & LISTO PARA CLOUDFLARE WORKER)
+         ========================================================================== -->
+    <div class="portal-modal-overlay" id="portalModal" role="dialog" aria-modal="true" aria-labelledby="portalModalTitle" onclick="if(event.target===this) closePortalModal()">
+        <div class="portal-modal-card">
+            <div class="portal-modal-head">
+                <div>
+                    <span class="section-kicker-dark" style="margin-bottom:4px;" data-i18n="portalKicker">Acceso Privado</span>
+                    <h3 class="editorial-h2-dark" id="portalModalTitle" style="font-size:1.85rem;" data-i18n="portalTitle">
+                        Portal de <em>Clientes</em>
+                    </h3>
+                </div>
+                <button type="button" class="portal-close-btn" onclick="closePortalModal()" aria-label="Cerrar portal">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+
+            <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:18px; line-height:1.55;" data-i18n="portalSub">
+                Consultá estados operativos (SOF), proformas (PDA), documentación de despacho y facturación en curso.
+            </p>
+
+            <form class="portal-form" id="portalLoginForm" onsubmit="handlePortalLogin(event)">
+                <div class="portal-input-group">
+                    <label for="portalUser" data-i18n="portalUserLabel">Usuario / Empresa Armadora</label>
+                    <input type="text" id="portalUser" name="username" autocomplete="username" required placeholder="ej. naviera@empresa.com">
+                </div>
+                <div class="portal-input-group">
+                    <label for="portalPass" data-i18n="portalPassLabel">Clave de Acceso</label>
+                    <input type="password" id="portalPass" name="password" autocomplete="current-password" required placeholder="••••••••">
+                </div>
+                <div class="portal-status-msg" id="portalStatusMsg"></div>
+                <button type="submit" class="portal-submit-btn" data-i18n="portalSubmit">Ingresar al Portal ↗</button>
+            </form>
+
+            <div class="portal-foot-help">
+                <span data-i18n="portalNoAcc">¿Necesitás habilitar tu acceso?</span>
+                <a href="mailto:operations@myrasa.com.ar?subject=Solicitud%20de%20Acceso%20Portal%20Clientes" data-i18n="portalReq">Solicitar credenciales</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         DOCK FLOTANTE CON SMART-SCROLL
          ========================================================================== -->
     <div class="gac-floating-dock" id="gacFloatingDock" aria-label="Accesos rápidos">
         <a href="https://wa.me/5491120161221?text=Hola%20MYRASA%2C%20consulta%20operativa%2024%2F7." target="_blank" rel="noopener noreferrer" class="gac-circle-btn wa" title="Guardia 24/7 WhatsApp" aria-label="WhatsApp 24/7">
@@ -2376,9 +2924,12 @@
     </div>
 
     <!-- ==========================================================================
-         MOTOR JAVASCRIPT COMPLETO: I18N + WEBGL AGUA + GIROSCOPIO + RADAR + SPY
+         MOTOR JAVASCRIPT COMPLETO: I18N + WEBGL + GIROSCOPIO + RADAR REAL + WAVE
          ========================================================================== -->
     <script>
+        /* URL del endpoint Cloudflare Worker / Access cuando lo conectes (ver guía) */
+        const PORTAL_AUTH_ENDPOINT = '';
+
         let currentLang = 'es';
         let currentOfficeKey = 'bsas';
         let currentPortFilter = 'all';
@@ -2440,7 +2991,15 @@
                 openGps: 'Abrir en GPS',
                 footerSub: 'Mar y Ríos Argentinos S.A. · Agencia Marítima operando desde 1992 con oficinas propias en los principales puertos de Argentina y operación regional en Uruguay.',
                 footNavTitle: 'Navegación',
-                footContactTitle: 'Canales Directos 24/7'
+                footContactTitle: 'Canales Directos 24/7',
+                portalKicker: 'Acceso Privado',
+                portalTitle: 'Portal de <em>Clientes</em>',
+                portalSub: 'Consultá estados operativos (SOF), proformas (PDA), documentación de despacho y facturación en curso.',
+                portalUserLabel: 'Usuario / Empresa Armadora',
+                portalPassLabel: 'Clave de Acceso',
+                portalSubmit: 'Ingresar al Portal ↗',
+                portalNoAcc: '¿Necesitás habilitar tu acceso?',
+                portalReq: 'Solicitar credenciales'
             },
             en: {
                 liveDuty: '24/7 Duty · 365 Days',
@@ -2498,7 +3057,15 @@
                 openGps: 'Open in GPS',
                 footerSub: 'Mar y Ríos Argentinos S.A. · Maritime Agency operating since 1992 with own offices across Argentina and regional operations in Uruguay.',
                 footNavTitle: 'Navigation',
-                footContactTitle: '24/7 Direct Channels'
+                footContactTitle: '24/7 Direct Channels',
+                portalKicker: 'Private Access',
+                portalTitle: 'Client <em>Portal</em>',
+                portalSub: 'Access live Statements of Facts (SOF), proforma DAs (PDA), vessel clearance docs, and invoicing.',
+                portalUserLabel: 'Username / Shipowner',
+                portalPassLabel: 'Access Key',
+                portalSubmit: 'Sign In to Portal ↗',
+                portalNoAcc: 'Need account credentials?',
+                portalReq: 'Request access'
             }
         };
 
@@ -2545,27 +3112,28 @@
             }
         ];
 
+        /* Coordenadas geográficas reales WGS84 (Latitud Sur, Longitud Oeste) */
         const operatingPorts = [
-            { name: 'Buenos Aires', tagEs: 'Oficina Propia · Casa Central', tagEn: 'Own Office · HQ', zone: 'atlantic', own: true, coord: "34°36'S · 58°22'W", radDist: 0.16, radAngle: 0.9 },
-            { name: 'Dock Sud', tagEs: 'Oficina Propia · Terminal Petrolera', tagEn: 'Own Office · Oil Terminal', zone: 'atlantic', own: true, coord: "34°39'S · 58°20'W", radDist: 0.22, radAngle: 1.15 },
-            { name: 'La Plata', tagEs: 'Oficina Propia · (0221) 469-2985', tagEn: 'Own Office · +54 221 469-2985', zone: 'atlantic', own: true, coord: "34°52'S · 57°53'W", radDist: 0.34, radAngle: 1.38 },
-            { name: 'San Lorenzo', tagEs: 'Oficina Propia · (03476) 43-1188', tagEn: 'Own Office · +54 3476 43-1188', zone: 'parana', own: true, coord: "32°44'S · 60°44'W", radDist: 0.48, radAngle: 3.72 },
-            { name: 'Barranqueras', tagEs: 'Oficina Propia · Chaco', tagEn: 'Own Office · Chaco', zone: 'parana', own: true, coord: "27°29'S · 58°56'W", radDist: 0.80, radAngle: 4.48 },
-            { name: 'Diamante', tagEs: 'Hidrovía Paraná', tagEn: 'Paraná Waterway', zone: 'parana', own: false, coord: "32°04'S · 60°38'W", radDist: 0.56, radAngle: 3.92 },
-            { name: 'Rosario', tagEs: 'Hidrovía Paraná', tagEn: 'Paraná Waterway', zone: 'parana', own: false, coord: "32°57'S · 60°38'W", radDist: 0.43, radAngle: 3.55 },
-            { name: 'San Nicolás', tagEs: 'Hidrovía Paraná', tagEn: 'Paraná Waterway', zone: 'parana', own: false, coord: "33°20'S · 60°13'W", radDist: 0.37, radAngle: 3.32 },
-            { name: 'Ramallo', tagEs: 'Hidrovía Paraná', tagEn: 'Paraná Waterway', zone: 'parana', own: false, coord: "33°29'S · 60°00'W", radDist: 0.33, radAngle: 3.12 },
-            { name: 'San Pedro', tagEs: 'Hidrovía Paraná', tagEn: 'Paraná Waterway', zone: 'parana', own: false, coord: "33°40'S · 59°40'W", radDist: 0.29, radAngle: 2.90 },
-            { name: 'Ibicuy', tagEs: 'Hidrovía Paraná', tagEn: 'Paraná Waterway', zone: 'parana', own: false, coord: "33°45'S · 59°10'W", radDist: 0.26, radAngle: 2.68 },
-            { name: 'Guazú', tagEs: 'Paraná Guazú', tagEn: 'Paraná Guazú', zone: 'parana', own: false, coord: "33°53'S · 58°49'W", radDist: 0.23, radAngle: 2.46 },
-            { name: 'Lima y Zárate', tagEs: 'Complejo Portuario', tagEn: 'Port Complex', zone: 'parana', own: false, coord: "34°05'S · 59°01'W", radDist: 0.20, radAngle: 2.24 },
-            { name: 'Campana', tagEs: 'Terminal Fluvial', tagEn: 'River Terminal', zone: 'parana', own: false, coord: "34°10'S · 58°57'W", radDist: 0.17, radAngle: 2.02 },
-            { name: 'Mar del Plata', tagEs: 'Costa Atlántica', tagEn: 'Atlantic Coast', zone: 'atlantic', own: false, coord: "38°02'S · 57°32'W", radDist: 0.63, radAngle: 1.72 },
-            { name: 'Necochea', tagEs: 'Puerto Quequén / Costa', tagEn: 'Atlantic Coast', zone: 'atlantic', own: false, coord: "38°34'S · 58°42'W", radDist: 0.72, radAngle: 1.94 },
-            { name: 'Bahía Blanca', tagEs: 'Puerto Aguas Profundas', tagEn: 'Deep Water Port', zone: 'atlantic', own: false, coord: "38°47'S · 62°16'W", radDist: 0.84, radAngle: 2.25 },
-            { name: 'San Antonio Este', tagEs: 'Patagonia Norte', tagEn: 'North Patagonia', zone: 'atlantic', own: false, coord: "40°49'S · 64°45'W", radDist: 0.91, radAngle: 2.55 },
-            { name: 'Nueva Palmira (ROU)', tagEs: 'Uruguay · Zona Franca', tagEn: 'Uruguay · Free Port', zone: 'atlantic', own: false, coord: "33°53'S · 58°25'W", radDist: 0.30, radAngle: 0.28 },
-            { name: 'Montevideo (ROU)', tagEs: 'Uruguay · Hub Atlántico', tagEn: 'Uruguay · Atlantic Hub', zone: 'atlantic', own: false, coord: "34°54'S · 56°13'W", radDist: 0.46, radAngle: 0.54 }
+            { name: 'Buenos Aires', tagEs: 'Oficina Propia · Casa Central', tagEn: 'Own Office · HQ', zone: 'atlantic', own: true, lat: 34.6037, lon: 58.3816 },
+            { name: 'Dock Sud', tagEs: 'Oficina Propia · Terminal Petrolera', tagEn: 'Own Office · Oil Terminal', zone: 'atlantic', own: true, lat: 34.6490, lon: 58.3380 },
+            { name: 'La Plata', tagEs: 'Oficina Propia · (0221) 469-2985', tagEn: 'Own Office · +54 221 469-2985', zone: 'atlantic', own: true, lat: 34.8630, lon: 57.8810 },
+            { name: 'San Lorenzo', tagEs: 'Oficina Propia · (03476) 43-1188', tagEn: 'Own Office · +54 3476 43-1188', zone: 'parana', own: true, lat: 32.7470, lon: 60.7310 },
+            { name: 'Barranqueras', tagEs: 'Oficina Propia · Chaco', tagEn: 'Own Office · Chaco', zone: 'parana', own: true, lat: 27.4820, lon: 58.9320 },
+            { name: 'Diamante', tagEs: 'Hidrovía Paraná', tagEn: 'Paraná Waterway', zone: 'parana', own: false, lat: 32.0670, lon: 60.6420 },
+            { name: 'Rosario', tagEs: 'Hidrovía Paraná', tagEn: 'Paraná Waterway', zone: 'parana', own: false, lat: 32.9468, lon: 60.6393 },
+            { name: 'San Nicolás', tagEs: 'Hidrovía Paraná', tagEn: 'Paraná Waterway', zone: 'parana', own: false, lat: 33.3330, lon: 60.2110 },
+            { name: 'Ramallo', tagEs: 'Hidrovía Paraná', tagEn: 'Paraná Waterway', zone: 'parana', own: false, lat: 33.4840, lon: 60.0020 },
+            { name: 'San Pedro', tagEs: 'Hidrovía Paraná', tagEn: 'Paraná Waterway', zone: 'parana', own: false, lat: 33.6790, lon: 59.6670 },
+            { name: 'Ibicuy', tagEs: 'Hidrovía Paraná', tagEn: 'Paraná Waterway', zone: 'parana', own: false, lat: 33.7510, lon: 59.1770 },
+            { name: 'Guazú', tagEs: 'Paraná Guazú', tagEn: 'Paraná Guazú', zone: 'parana', own: false, lat: 33.8980, lon: 58.8550 },
+            { name: 'Lima y Zárate', tagEs: 'Complejo Portuario', tagEn: 'Port Complex', zone: 'parana', own: false, lat: 34.0980, lon: 59.0240 },
+            { name: 'Campana', tagEs: 'Terminal Fluvial', tagEn: 'River Terminal', zone: 'parana', own: false, lat: 34.1630, lon: 58.9590 },
+            { name: 'Mar del Plata', tagEs: 'Costa Atlántica', tagEn: 'Atlantic Coast', zone: 'atlantic', own: false, lat: 38.0370, lon: 57.5350 },
+            { name: 'Necochea', tagEs: 'Puerto Quequén / Costa', tagEn: 'Atlantic Coast', zone: 'atlantic', own: false, lat: 38.5790, lon: 58.7030 },
+            { name: 'Bahía Blanca', tagEs: 'Puerto Aguas Profundas', tagEn: 'Deep Water Port', zone: 'atlantic', own: false, lat: 38.7860, lon: 62.2630 },
+            { name: 'San Antonio Este', tagEs: 'Patagonia Norte', tagEn: 'North Patagonia', zone: 'atlantic', own: false, lat: 40.8080, lon: 64.7560 },
+            { name: 'Nueva Palmira (ROU)', tagEs: 'Uruguay · Zona Franca', tagEn: 'Uruguay · Free Port', zone: 'atlantic', own: false, lat: 33.8760, lon: 58.4190 },
+            { name: 'Montevideo (ROU)', tagEs: 'Uruguay · Hub Atlántico', tagEn: 'Uruguay · Atlantic Hub', zone: 'atlantic', own: false, lat: 34.9059, lon: 56.2116 }
         ];
 
         const portsDirectoryData = {
@@ -2621,6 +3189,25 @@
 
         let radarActiveTarget = operatingPorts[0];
 
+        function formatDMS(dec, hemi) {
+            const abs = Math.abs(dec);
+            const deg = Math.floor(abs);
+            const min = Math.round((abs - deg) * 60);
+            return `${deg}°${String(min).padStart(2, '0')}'${hemi}`;
+        }
+
+        function calcNauticalMilesFromHQ(lat, lon) {
+            const hqLat = -34.6037 * Math.PI / 180;
+            const hqLon = -58.3816 * Math.PI / 180;
+            const pLat = -lat * Math.PI / 180;
+            const pLon = -lon * Math.PI / 180;
+            const dLat = pLat - hqLat;
+            const dLon = pLon - hqLon;
+            const a = Math.sin(dLat / 2) ** 2 + Math.cos(hqLat) * Math.cos(pLat) * Math.sin(dLon / 2) ** 2;
+            const km = 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return Math.round(km / 1.852);
+        }
+
         function renderServices() {
             const container = document.getElementById('servicesGrid');
             if (!container) return;
@@ -2661,13 +3248,25 @@
             radarActiveTarget = found;
             const isEn = currentLang === 'en';
             const badge = found.own ? (isEn ? 'OWN OFFICE' : 'OFICINA PROPIA') : (isEn ? 'ACTIVE PORT' : 'PUERTO ACTIVO');
+            const nm = calcNauticalMilesFromHQ(found.lat, found.lon);
+            const distTag = nm === 0 ? 'HQ' : `${nm} NM`;
+
             const nameEl = document.getElementById('radarLockName');
             const coordEl = document.getElementById('radarLockCoord');
             if (nameEl) nameEl.innerText = `LOCK: ${found.name.toUpperCase()} (${badge})`;
-            if (coordEl) coordEl.innerText = found.coord;
+            if (coordEl) coordEl.innerText = `${formatDMS(found.lat, 'S')} · ${formatDMS(found.lon, 'W')} · ${distTag}`;
 
             document.querySelectorAll('.port-showcase-card').forEach(card => {
                 card.classList.toggle('is-radar-locked', card.getAttribute('data-port-name') === found.name);
+            });
+        }
+
+        function getFilteredPorts() {
+            return operatingPorts.filter(p => {
+                if (currentPortFilter === 'own') return p.own;
+                if (currentPortFilter === 'parana') return p.zone === 'parana';
+                if (currentPortFilter === 'atlantic') return p.zone === 'atlantic';
+                return true;
             });
         }
 
@@ -2675,12 +3274,7 @@
             const grid = document.getElementById('portsShowcaseGrid');
             if (!grid) return;
             const isEn = currentLang === 'en';
-            const filtered = operatingPorts.filter(p => {
-                if (currentPortFilter === 'own') return p.own;
-                if (currentPortFilter === 'parana') return p.zone === 'parana';
-                if (currentPortFilter === 'atlantic') return p.zone === 'atlantic';
-                return true;
-            });
+            const filtered = getFilteredPorts();
 
             grid.innerHTML = filtered.map(p => {
                 const isLocked = radarActiveTarget && radarActiveTarget.name === p.name ? 'is-radar-locked' : '';
@@ -2702,6 +3296,11 @@
             document.querySelectorAll('.port-filter-btn').forEach(b => b.classList.remove('active'));
             if (btnEl) btnEl.classList.add('active');
             renderPorts();
+
+            const list = getFilteredPorts();
+            if (list.length && (!radarActiveTarget || !list.some(p => p.name === radarActiveTarget.name))) {
+                lockRadarTarget(list[0].name);
+            }
         }
 
         function renderOfficeBoard(key) {
@@ -2798,13 +3397,85 @@
             if (strip) strip.classList.add('is-dismissed');
         }
 
+        /* ======================================================================
+           DRAWER MÓVIL & MODAL PORTAL CLIENTES
+           ====================================================================== */
         function toggleMobileMenu() {
-            document.getElementById('mobileDrawer').classList.toggle('open');
+            const drawer = document.getElementById('mobileDrawer');
+            const backdrop = document.getElementById('mobileDrawerBackdrop');
+            const btn = document.getElementById('mobileMenuToggleBtn');
+            const isOpen = drawer.classList.toggle('open');
+            backdrop.classList.toggle('open', isOpen);
+            drawer.setAttribute('aria-hidden', String(!isOpen));
+            if (btn) btn.setAttribute('aria-expanded', String(isOpen));
+            document.body.style.overflow = isOpen ? 'hidden' : '';
         }
 
         function closeMobileMenu() {
-            document.getElementById('mobileDrawer').classList.remove('open');
+            const drawer = document.getElementById('mobileDrawer');
+            const backdrop = document.getElementById('mobileDrawerBackdrop');
+            const btn = document.getElementById('mobileMenuToggleBtn');
+            drawer.classList.remove('open');
+            backdrop.classList.remove('open');
+            drawer.setAttribute('aria-hidden', 'true');
+            if (btn) btn.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
         }
+
+        function openPortalModal() {
+            const modal = document.getElementById('portalModal');
+            const status = document.getElementById('portalStatusMsg');
+            if (status) { status.classList.remove('visible'); status.innerText = ''; }
+            if (modal) {
+                modal.classList.add('open');
+                setTimeout(() => document.getElementById('portalUser')?.focus(), 180);
+            }
+        }
+
+        function closePortalModal() {
+            document.getElementById('portalModal')?.classList.remove('open');
+        }
+
+        async function handlePortalLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('portalUser').value.trim();
+            const pass = document.getElementById('portalPass').value;
+            const status = document.getElementById('portalStatusMsg');
+            const isEn = currentLang === 'en';
+
+            if (!PORTAL_AUTH_ENDPOINT) {
+                status.innerHTML = isEn
+                    ? `<strong>Cloudflare Auth ready:</strong> Set <code>PORTAL_AUTH_ENDPOINT</code> to your Cloudflare Worker or Access URL to authenticate <strong>${user}</strong> securely.`
+                    : `<strong>Portal listo para Cloudflare:</strong> Configurá <code>PORTAL_AUTH_ENDPOINT</code> con la URL de tu Worker o Cloudflare Access para validar a <strong>${user}</strong> de forma segura.`;
+                status.classList.add('visible');
+                return;
+            }
+
+            try {
+                const res = await fetch(PORTAL_AUTH_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user, pass })
+                });
+                const data = await res.json();
+                if (res.ok && data.redirectUrl) {
+                    window.location.href = data.redirectUrl;
+                } else {
+                    status.innerText = isEn ? 'Invalid credentials. Contact operations@myrasa.com.ar.' : 'Credenciales inválidas. Contactá a operations@myrasa.com.ar.';
+                    status.classList.add('visible');
+                }
+            } catch (err) {
+                status.innerText = isEn ? 'Connection error. Please retry.' : 'Error de conexión con el servidor de acceso.';
+                status.classList.add('visible');
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closePortalModal();
+                closeMobileMenu();
+            }
+        });
 
         function applyLanguage(lang) {
             currentLang = lang;
@@ -2812,12 +3483,14 @@
             document.documentElement.setAttribute('lang', lang);
             document.getElementById('langEs').classList.toggle('active', lang === 'es');
             document.getElementById('langEn').classList.toggle('active', lang === 'en');
+            const dLabel = document.getElementById('drawerLangLabel');
+            if (dLabel) dLabel.innerText = lang === 'es' ? 'ES / EN' : 'EN / ES';
 
             const dict = i18n[lang] || i18n.es;
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const k = el.getAttribute('data-i18n');
                 if (dict[k]) {
-                    if (k.includes('Headline') || k === 'aboutBody') {
+                    if (k.includes('Headline') || k === 'aboutBody' || k === 'portalTitle') {
                         el.innerHTML = dict[k];
                     } else {
                         el.innerText = dict[k];
@@ -2839,7 +3512,7 @@
         }
 
         /* ======================================================================
-           MOTOR WEBGL FLUID / WATER RIPPLE SHADER (AWWWARDS 60/120 FPS)
+           MOTOR WEBGL FLUID / WATER RIPPLE SHADER (PORTADA HERO)
            ====================================================================== */
         function initWaterShader() {
             const canvas = document.getElementById('waterCanvas');
@@ -2884,7 +3557,6 @@
                     float ambientWave = sin(v_uv.y * 22.0 + u_time * 1.35) * cos(v_uv.x * 14.0 - u_time * 0.9) * 0.0014;
                     vec2 totalDisp = vec2(ambientWave, ambientWave * 0.6);
                     float causticGlow = 0.0;
-
                     float aspect = u_res.x / max(1.0, u_res.y);
 
                     for (int i = 0; i < 8; i++) {
@@ -3104,7 +3776,6 @@
                 if (!isVisible) { rafId = null; return; }
                 const t = nowMs * 0.001;
 
-                // Oleaje base oceánico muy sutil + respuesta mecánica spring-damper
                 const seaRoll = Math.sin(t * 0.9) * 1.4;
                 const seaPitch = Math.cos(t * 1.15) * 1.0;
 
@@ -3142,7 +3813,6 @@
                 ctx.save();
                 ctx.translate(cx, cy);
 
-                // Bisel exterior rotatorio de compás (000° - 360°)
                 ctx.save();
                 ctx.rotate(-curHdg * Math.PI / 180);
                 ctx.strokeStyle = 'rgba(2, 168, 242, 0.48)';
@@ -3165,7 +3835,6 @@
                 }
                 ctx.restore();
 
-                // Esfera interior del horizonte artificial
                 ctx.save();
                 ctx.beginPath();
                 ctx.arc(0, 0, innerR, 0, Math.PI * 2);
@@ -3187,7 +3856,6 @@
                 ctx.fillStyle = seaGrad;
                 ctx.fillRect(-innerR * 2, 0, innerR * 4, innerR * 2.5);
 
-                // Línea de horizonte luminosa
                 ctx.strokeStyle = '#02A8F2';
                 ctx.lineWidth = Math.max(1.5, w * 0.012);
                 ctx.beginPath();
@@ -3195,7 +3863,6 @@
                 ctx.lineTo(innerR * 1.6, 0);
                 ctx.stroke();
 
-                // Escala de cabeceo (Pitch ladder)
                 [-20, -10, 10, 20].forEach(deg => {
                     const y = -(deg / 25) * innerR;
                     const halfW = Math.abs(deg) === 20 ? innerR * 0.34 : innerR * 0.22;
@@ -3208,7 +3875,6 @@
                 });
                 ctx.restore();
 
-                // Aro divisor interno + triángulo indicador superior fijo
                 ctx.strokeStyle = 'rgba(122, 217, 255, 0.55)';
                 ctx.lineWidth = Math.max(1, w * 0.007);
                 ctx.beginPath();
@@ -3223,7 +3889,6 @@
                 ctx.closePath();
                 ctx.fill();
 
-                // Colimador naval fijo central (buque)
                 ctx.strokeStyle = '#FFFFFF';
                 ctx.lineWidth = Math.max(1.6, w * 0.011);
                 ctx.beginPath();
@@ -3248,7 +3913,7 @@
         }
 
         /* ======================================================================
-           INSTRUMENTO 2: RADAR NAVAL TÁCTICO A 60 FPS (BLIPS INTERACTIVOS)
+           INSTRUMENTO 2: CARTA NÁUTICA RADAR REAL (LAT/LON EXACTOS AR & ROU)
            ====================================================================== */
         function initTacticalRadar() {
             const canvas = document.getElementById('radarCanvas');
@@ -3259,10 +3924,42 @@
             let rafId = null;
             let blipCoords = [];
 
+            /* Polilíneas geográficas reales (Latitud S, Longitud W) */
+            const paranaRiverGeo = [
+                [27.20, 58.60], [27.48, 58.93], [28.45, 59.10], [29.15, 59.65],
+                [30.72, 60.02], [31.65, 60.70], [32.07, 60.64], [32.75, 60.73],
+                [32.95, 60.63], [33.33, 60.21], [33.48, 60.00], [33.68, 59.66],
+                [33.75, 59.18], [33.90, 58.85], [34.10, 59.02], [34.16, 58.95], [34.45, 58.52]
+            ];
+
+            const uruguayRiverAndCoastGeo = [
+                [32.30, 58.12], [33.15, 58.32], [33.88, 58.42], [34.18, 58.28],
+                [34.47, 57.84], [34.72, 57.12], [34.91, 56.21], [34.96, 54.95], [34.65, 54.15]
+            ];
+
+            const argCoastGeo = [
+                [34.45, 58.52], [34.60, 58.38], [34.65, 58.34], [34.86, 57.88],
+                [35.38, 57.16], [36.28, 56.72], [37.12, 56.86], [38.04, 57.54],
+                [38.58, 58.70], [38.98, 61.28], [38.79, 62.26], [39.95, 62.10],
+                [40.81, 64.76], [41.35, 65.05]
+            ];
+
+            let curBounds = { minLat: 26.2, maxLat: 41.8, maxLon: 65.8, minLon: 53.6 };
+
+            function getTargetBounds() {
+                if (currentPortFilter === 'parana') {
+                    return { minLat: 26.5, maxLat: 35.1, maxLon: 62.4, minLon: 57.0 };
+                }
+                if (currentPortFilter === 'atlantic') {
+                    return { minLat: 33.1, maxLat: 41.8, maxLon: 65.8, minLon: 53.6 };
+                }
+                return { minLat: 26.2, maxLat: 41.8, maxLon: 65.8, minLon: 53.6 };
+            }
+
             function resizeRadar() {
                 const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
                 const w = canvas.clientWidth || 560;
-                const h = canvas.clientHeight || 420;
+                const h = canvas.clientHeight || 460;
                 canvas.width = Math.floor(w * dpr);
                 canvas.height = Math.floor(h * dpr);
             }
@@ -3276,131 +3973,173 @@
                 }).observe(canvas);
             }
 
-            // Interacción directa sobre el Radar: fijar objetivo tocando/haciendo click
-            function handleRadarInteract(e) {
+            function handleRadarClick(e) {
                 const rect = canvas.getBoundingClientRect();
                 const dpr = canvas.width / Math.max(1, rect.width);
                 const px = (e.clientX - rect.left) * dpr;
                 const py = (e.clientY - rect.top) * dpr;
 
                 let closest = null;
-                let minD = 32 * dpr;
+                let minD = 30 * dpr;
                 blipCoords.forEach(item => {
                     const d = Math.hypot(px - item.x, py - item.y);
                     if (d < minD) { minD = d; closest = item.port; }
                 });
                 if (closest) lockRadarTarget(closest.name);
             }
+            canvas.addEventListener('pointerdown', handleRadarClick, { passive: true });
 
-            canvas.addEventListener('pointerdown', handleRadarInteract, { passive: true });
+            function project(lat, lon, w, h) {
+                const padX = w * 0.10;
+                const padTop = h * 0.14;
+                const padBot = h * 0.19;
+                const plotW = w - padX * 2;
+                const plotH = h - padTop - padBot;
+
+                const midLatRad = ((curBounds.minLat + curBounds.maxLat) * 0.5) * Math.PI / 180;
+                const lonSpan = (curBounds.maxLon - curBounds.minLon) * Math.cos(midLatRad);
+                const latSpan = curBounds.maxLat - curBounds.minLat;
+
+                const scale = Math.min(plotW / lonSpan, plotH / latSpan);
+                const drawnW = lonSpan * scale;
+                const drawnH = latSpan * scale;
+                const offsetX = padX + (plotW - drawnW) * 0.5;
+                const offsetY = padTop + (plotH - drawnH) * 0.5;
+
+                const x = offsetX + (curBounds.maxLon - lon) * Math.cos(midLatRad) * scale;
+                const y = offsetY + (lat - curBounds.minLat) * scale;
+                return { x, y };
+            }
+
+            function drawPoly(points, w, h, strokeStyle, lineWidth) {
+                ctx.strokeStyle = strokeStyle;
+                ctx.lineWidth = lineWidth;
+                ctx.beginPath();
+                points.forEach((pt, idx) => {
+                    const p = project(pt[0], pt[1], w, h);
+                    if (idx === 0) ctx.moveTo(p.x, p.y);
+                    else ctx.lineTo(p.x, p.y);
+                });
+                ctx.stroke();
+            }
 
             function drawRadar(nowMs) {
                 if (!isVisible) { rafId = null; return; }
 
+                const tb = getTargetBounds();
+                curBounds.minLat += (tb.minLat - curBounds.minLat) * 0.09;
+                curBounds.maxLat += (tb.maxLat - curBounds.maxLat) * 0.09;
+                curBounds.minLon += (tb.minLon - curBounds.minLon) * 0.09;
+                curBounds.maxLon += (tb.maxLon - curBounds.maxLon) * 0.09;
+
                 const w = canvas.width;
                 const h = canvas.height;
-                const cx = w * 0.5;
-                const cy = h * 0.49;
-                const maxR = Math.min(w, h) * 0.39;
                 const t = nowMs * 0.001;
 
                 ctx.clearRect(0, 0, w, h);
 
-                // Fondo sutil de carta electrónica naval
+                // Grilla real de paralelos y meridianos
                 ctx.save();
-                ctx.strokeStyle = 'rgba(2, 168, 242, 0.16)';
-                ctx.lineWidth = Math.max(1, w * 0.002);
+                ctx.strokeStyle = 'rgba(2, 168, 242, 0.11)';
+                ctx.lineWidth = Math.max(1, w * 0.0018);
+                ctx.fillStyle = 'rgba(122, 217, 255, 0.36)';
+                ctx.font = `600 ${Math.max(9, Math.round(w * 0.017))}px "JetBrains Mono", monospace`;
 
-                // Anillos de distancia náutica (16, 32, 48, 64 NM)
-                [0.25, 0.5, 0.75, 1.0].forEach(ratio => {
+                [28, 30, 32, 34, 36, 38, 40].forEach(lat => {
+                    if (lat < curBounds.minLat || lat > curBounds.maxLat) return;
+                    const pL = project(lat, curBounds.maxLon, w, h);
+                    const pR = project(lat, curBounds.minLon, w, h);
                     ctx.beginPath();
-                    ctx.arc(cx, cy, maxR * ratio, 0, Math.PI * 2);
+                    ctx.moveTo(0, pL.y);
+                    ctx.lineTo(w, pR.y);
+                    ctx.stroke();
+                    ctx.fillText(`${lat}°S`, 12, pL.y - 4);
+                });
+
+                [64, 62, 60, 58, 56, 54].forEach(lon => {
+                    if (lon < curBounds.minLon || lon > curBounds.maxLon) return;
+                    const pT = project(curBounds.minLat, lon, w, h);
+                    ctx.beginPath();
+                    ctx.moveTo(pT.x, 0);
+                    ctx.lineTo(pT.x, h);
+                    ctx.stroke();
+                    ctx.fillText(`${lon}°W`, pT.x + 4, h * 0.11);
+                });
+
+                // Anillos de alcance centrados en Casa Central (Buenos Aires 34.60°S, 58.38°W)
+                const hqP = project(34.6037, 58.3816, w, h);
+                const maxSweepR = Math.max(w, h) * 0.65;
+                ctx.strokeStyle = 'rgba(2, 168, 242, 0.14)';
+                [0.18, 0.36, 0.56, 0.78].forEach(rFrac => {
+                    ctx.beginPath();
+                    ctx.arc(hqP.x, hqP.y, maxSweepR * rFrac, 0, Math.PI * 2);
                     ctx.stroke();
                 });
 
-                // Retícula azimutal exterior (marcas cada 30°)
-                for (let deg = 0; deg < 360; deg += 30) {
-                    const rad = deg * Math.PI / 180;
-                    ctx.beginPath();
-                    ctx.moveTo(cx + Math.cos(rad) * (maxR * 0.94), cy + Math.sin(rad) * (maxR * 0.94));
-                    ctx.lineTo(cx + Math.cos(rad) * maxR, cy + Math.sin(rad) * maxR);
-                    ctx.stroke();
-                }
+                // Silueta cartográfica real: Hidrovía Paraná + Costa ROU + Costa Atlántica
+                drawPoly(paranaRiverGeo, w, h, 'rgba(108, 224, 255, 0.38)', Math.max(1.8, w * 0.004));
+                drawPoly(uruguayRiverAndCoastGeo, w, h, 'rgba(122, 217, 255, 0.30)', Math.max(1.5, w * 0.0032));
+                drawPoly(argCoastGeo, w, h, 'rgba(122, 217, 255, 0.42)', Math.max(1.8, w * 0.0038));
 
-                // Ejes principales
-                ctx.beginPath();
-                ctx.moveTo(cx - maxR, cy);
-                ctx.lineTo(cx + maxR, cy);
-                ctx.moveTo(cx, cy - maxR);
-                ctx.lineTo(cx, cy + maxR);
-                ctx.stroke();
-
-                // Silueta esquemática del corredor fluvial Hidrovía -> Río de la Plata -> Atlántico
-                ctx.strokeStyle = 'rgba(122, 217, 255, 0.18)';
-                ctx.lineWidth = Math.max(1.2, w * 0.003);
-                ctx.beginPath();
-                ctx.moveTo(cx + Math.cos(4.48) * maxR * 0.8, cy + Math.sin(4.48) * maxR * 0.8);
-                ctx.quadraticCurveTo(cx - maxR * 0.42, cy - maxR * 0.15, cx + Math.cos(0.9) * maxR * 0.16, cy + Math.sin(0.9) * maxR * 0.16);
-                ctx.quadraticCurveTo(cx + maxR * 0.25, cy + maxR * 0.45, cx + Math.cos(2.55) * maxR * 0.91, cy + Math.sin(2.55) * maxR * 0.91);
-                ctx.stroke();
-
-                // Barrido fosforescente continuo
-                sweepAngle = (sweepAngle + 0.022) % (Math.PI * 2);
-
+                // Barrido de radar centrado en Buenos Aires HQ
+                sweepAngle = (sweepAngle + 0.020) % (Math.PI * 2);
                 ctx.save();
                 ctx.beginPath();
-                ctx.moveTo(cx, cy);
-                ctx.arc(cx, cy, maxR, sweepAngle - 0.55, sweepAngle);
+                ctx.moveTo(hqP.x, hqP.y);
+                ctx.arc(hqP.x, hqP.y, maxSweepR, sweepAngle - 0.48, sweepAngle);
                 ctx.closePath();
-                const sweepGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR);
-                sweepGrad.addColorStop(0, 'rgba(2, 168, 242, 0.36)');
-                sweepGrad.addColorStop(0.7, 'rgba(2, 168, 242, 0.14)');
-                sweepGrad.addColorStop(1, 'rgba(2, 168, 242, 0.02)');
+                const sweepGrad = ctx.createRadialGradient(hqP.x, hqP.y, 0, hqP.x, hqP.y, maxSweepR);
+                sweepGrad.addColorStop(0, 'rgba(2, 168, 242, 0.28)');
+                sweepGrad.addColorStop(0.75, 'rgba(2, 168, 242, 0.08)');
+                sweepGrad.addColorStop(1, 'transparent');
                 ctx.fillStyle = sweepGrad;
                 ctx.fill();
 
-                ctx.strokeStyle = '#6CE0FF';
-                ctx.lineWidth = Math.max(1.5, w * 0.0035);
+                ctx.strokeStyle = 'rgba(108, 224, 255, 0.75)';
+                ctx.lineWidth = Math.max(1.4, w * 0.003);
                 ctx.beginPath();
-                ctx.moveTo(cx, cy);
-                ctx.lineTo(cx + Math.cos(sweepAngle) * maxR, cy + Math.sin(sweepAngle) * maxR);
+                ctx.moveTo(hqP.x, hqP.y);
+                ctx.lineTo(hqP.x + Math.cos(sweepAngle) * maxSweepR, hqP.y + Math.sin(sweepAngle) * maxSweepR);
                 ctx.stroke();
                 ctx.restore();
 
-                // Ecos portuarios
+                // Ecos reales de los 20 puertos
+                const activeList = getFilteredPorts();
+                const activeNames = new Set(activeList.map(p => p.name));
                 blipCoords = [];
-                operatingPorts.forEach(port => {
-                    const bx = cx + Math.cos(port.radAngle) * (maxR * port.radDist);
-                    const by = cy + Math.sin(port.radAngle) * (maxR * port.radDist);
-                    blipCoords.push({ x: bx, y: by, port });
 
-                    let diff = sweepAngle - port.radAngle;
+                operatingPorts.forEach(port => {
+                    const pt = project(port.lat, port.lon, w, h);
+                    const inFilter = activeNames.has(port.name);
+                    if (inFilter) blipCoords.push({ x: pt.x, y: pt.y, port });
+
+                    const angle = Math.atan2(pt.y - hqP.y, pt.x - hqP.x);
+                    let diff = sweepAngle - angle;
                     while (diff < 0) diff += Math.PI * 2;
                     while (diff > Math.PI * 2) diff -= Math.PI * 2;
                     const decay = Math.max(0, 1 - diff / 2.2);
 
                     const isLocked = radarActiveTarget && radarActiveTarget.name === port.name;
-                    const baseRadius = port.own ? Math.max(3.5, w * 0.0085) : Math.max(2.2, w * 0.0055);
+                    const baseR = port.own ? Math.max(4, w * 0.0085) : Math.max(2.6, w * 0.0055);
 
                     if (isLocked) {
-                        const pulse = baseRadius * 2.2 + Math.sin(t * 5.0) * (w * 0.004);
+                        const pulse = baseR * 2.2 + Math.sin(t * 5.0) * (w * 0.004);
                         ctx.strokeStyle = '#22C55E';
-                        ctx.lineWidth = Math.max(1.5, w * 0.003);
+                        ctx.lineWidth = Math.max(1.6, w * 0.0032);
                         ctx.beginPath();
-                        ctx.arc(bx, by, pulse, 0, Math.PI * 2);
+                        ctx.arc(pt.x, pt.y, pulse, 0, Math.PI * 2);
                         ctx.stroke();
 
-                        // Etiqueta táctica del objetivo fijado
                         ctx.fillStyle = '#FFFFFF';
                         ctx.font = `700 ${Math.max(10, Math.round(w * 0.02))}px "JetBrains Mono", monospace`;
-                        ctx.fillText(port.name.toUpperCase(), bx + pulse + 6, by + 3);
+                        const labelX = pt.x > w * 0.68 ? pt.x - pulse - ctx.measureText(port.name.toUpperCase()).width - 8 : pt.x + pulse + 8;
+                        ctx.fillText(port.name.toUpperCase(), labelX, pt.y + 4);
                     }
 
-                    ctx.fillStyle = isLocked
-                        ? '#22C55E'
-                        : (port.own ? `rgba(2, 168, 242, ${0.48 + decay * 0.52})` : `rgba(215, 240, 255, ${0.30 + decay * 0.55})`);
+                    const alpha = inFilter ? (0.45 + decay * 0.55) : 0.16;
+                    ctx.fillStyle = isLocked ? '#22C55E' : (port.own ? `rgba(2, 168, 242, ${alpha})` : `rgba(225, 244, 255, ${alpha})`);
                     ctx.beginPath();
-                    ctx.arc(bx, by, baseRadius, 0, Math.PI * 2);
+                    ctx.arc(pt.x, pt.y, baseR, 0, Math.PI * 2);
                     ctx.fill();
                 });
 
@@ -3412,13 +4151,117 @@
         }
 
         /* ======================================================================
-           SCROLL-SPY DETERMINÍSTICO DE SERVICIOS + SMART DOCK + REVELADO SEGURO
+           SEGUNDO EFECTO DE AGUA: OCEAN WAVE FLUIDO INTERACTIVO (FOOTER)
            ====================================================================== */
-        function initScrollInteractions() {
+        function initOceanWave() {
+            const canvas = document.getElementById('waveCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let isVisible = true;
+            let rafId = null;
+            let pointerX = 0.5;
+            let pointerInfluence = 0;
+
+            function resizeWave() {
+                const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+                const w = canvas.clientWidth || window.innerWidth;
+                const h = canvas.clientHeight || 112;
+                canvas.width = Math.floor(w * dpr);
+                canvas.height = Math.floor(h * dpr);
+            }
+            resizeWave();
+            window.addEventListener('resize', resizeWave, { passive: true });
+
+            canvas.addEventListener('pointermove', (e) => {
+                const r = canvas.getBoundingClientRect();
+                pointerX = (e.clientX - r.left) / Math.max(1, r.width);
+                pointerInfluence = 1.0;
+            }, { passive: true });
+
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver(entries => {
+                    isVisible = entries[0].isIntersecting;
+                    if (isVisible && !rafId) rafId = requestAnimationFrame(drawWaves);
+                }).observe(canvas);
+            }
+
+            const layers = [
+                { amp: 0.14, freq: 2.1, speed: 0.75, phase: 0.0, baseY: 0.44, fill: 'rgba(2, 168, 242, 0.24)', crest: null },
+                { amp: 0.13, freq: 2.8, speed: -0.95, phase: 1.7, baseY: 0.54, fill: 'rgba(4, 83, 170, 0.42)', crest: null },
+                { amp: 0.11, freq: 3.3, speed: 1.25, phase: 3.2, baseY: 0.64, fill: 'rgba(2, 43, 94, 0.72)', crest: 'rgba(122, 217, 255, 0.35)' },
+                { amp: 0.09, freq: 3.9, speed: 1.55, phase: 4.8, baseY: 0.74, fill: '#011938', crest: 'rgba(2, 168, 242, 0.65)' }
+            ];
+
+            function drawWaves(nowMs) {
+                if (!isVisible) { rafId = null; return; }
+                const w = canvas.width;
+                const h = canvas.height;
+                const t = nowMs * 0.001;
+                pointerInfluence *= 0.96;
+
+                ctx.clearRect(0, 0, w, h);
+
+                layers.forEach((layer, idx) => {
+                    ctx.beginPath();
+                    const steps = 64;
+                    for (let i = 0; i <= steps; i++) {
+                        const nx = i / steps;
+                        const x = nx * w;
+                        const distMouse = Math.abs(nx - pointerX);
+                        const swell = Math.exp(-distMouse * distMouse * 28.0) * pointerInfluence * (h * 0.16);
+                        const y = h * layer.baseY
+                            + Math.sin(nx * Math.PI * layer.freq + t * layer.speed + layer.phase) * (h * layer.amp)
+                            + Math.cos(nx * Math.PI * (layer.freq * 1.6) - t * (layer.speed * 0.7)) * (h * layer.amp * 0.35)
+                            - swell * (idx * 0.25 + 0.4);
+                        if (i === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    if (layer.crest) {
+                        ctx.strokeStyle = layer.crest;
+                        ctx.lineWidth = Math.max(1.5, h * 0.018);
+                        ctx.stroke();
+                    }
+                    ctx.lineTo(w, h + 2);
+                    ctx.lineTo(0, h + 2);
+                    ctx.closePath();
+                    ctx.fillStyle = layer.fill;
+                    ctx.fill();
+                });
+
+                rafId = requestAnimationFrame(drawWaves);
+            }
+
+            rafId = requestAnimationFrame(drawWaves);
+        }
+
+        /* ======================================================================
+           ATERRIZAJE TIPO ASCENSOR + SCROLL-SPY DETERMINÍSTICO + REVELADO SEGURO
+           ====================================================================== */
+        function initElevatorAndScrollSpy() {
             const header = document.getElementById('siteHeader');
             const floatingDock = document.getElementById('gacFloatingDock');
             const chapterIds = ['srv-cap-1', 'srv-cap-2', 'srv-cap-3', 'srv-cap-4'];
             const navLinks = Array.from(document.querySelectorAll('.sticky-nav-link'));
+
+            // Aterrizaje tipo ascensor con aire visual exacto debajo del Header
+            document.addEventListener('click', (e) => {
+                const anchor = e.target.closest('a[href^="#"]');
+                if (!anchor) return;
+                const hash = anchor.getAttribute('href');
+                if (!hash || hash === '#') return;
+                const target = document.querySelector(hash);
+                if (!target) return;
+
+                e.preventDefault();
+                if (hash === '#top') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    return;
+                }
+                const headerH = header ? header.offsetHeight : 116;
+                const extraAir = 32;
+                const destY = target.getBoundingClientRect().top + window.scrollY - headerH - extraAir;
+                window.scrollTo({ top: Math.max(0, destY), behavior: 'smooth' });
+            });
 
             let ticking = false;
             function updateOnScroll() {
@@ -3428,15 +4271,14 @@
                 if (header) header.classList.toggle('is-scrolled', y > 24);
                 if (floatingDock) floatingDock.classList.toggle('is-visible', y > window.innerHeight * 0.55);
 
-                // Scroll-Spy estricto: evalúa el capítulo activo según la línea de lectura (35% del viewport)
-                const triggerY = window.innerHeight * 0.36;
+                const headerH = header ? header.offsetHeight : 116;
+                const triggerY = headerH + 140;
                 let activeId = chapterIds[0];
 
                 for (let i = 0; i < chapterIds.length; i++) {
                     const el = document.getElementById(chapterIds[i]);
                     if (!el) continue;
-                    const rect = el.getBoundingClientRect();
-                    if (rect.top <= triggerY) {
+                    if (el.getBoundingClientRect().top <= triggerY) {
                         activeId = chapterIds[i];
                     }
                 }
@@ -3454,7 +4296,6 @@
             }, { passive: true });
             updateOnScroll();
 
-            // Revelado óptico con resguardo total (nunca deja contenido oculto)
             const reveals = document.querySelectorAll('.reveal');
             if ('IntersectionObserver' in window) {
                 document.documentElement.classList.add('js-reveal-ready');
@@ -3465,7 +4306,7 @@
                             obs.unobserve(entry.target);
                         }
                     });
-                }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+                }, { threshold: 0.06, rootMargin: '0px 0px -24px 0px' });
 
                 reveals.forEach(el => {
                     if (el.getBoundingClientRect().top < window.innerHeight * 0.95) {
@@ -3475,10 +4316,9 @@
                     }
                 });
 
-                // Failsafe: si por algún motivo algún bloque no disparó observer, se muestra garantizado
                 setTimeout(() => {
                     reveals.forEach(el => el.classList.add('is-visible'));
-                }, 1400);
+                }, 1300);
             } else {
                 reveals.forEach(el => el.classList.add('is-visible'));
             }
@@ -3495,7 +4335,8 @@
             initWaterShader();
             initNavalGyroscope();
             initTacticalRadar();
-            initScrollInteractions();
+            initOceanWave();
+            initElevatorAndScrollSpy();
         });
     </script>
 </body>
